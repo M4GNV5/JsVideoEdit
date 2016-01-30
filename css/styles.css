@@ -1,0 +1,24 @@
+body
+{
+	padding-bottom: 70px;
+}
+
+.editor-size-box
+{
+	width: 75px;
+}
+
+#editor
+{
+	border-style: dashed;
+	border-width: thin;
+	border-color: #000000;
+
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#editForm
+{
+	max-width: 1000px;
+}

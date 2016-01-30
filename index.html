@@ -1,0 +1,120 @@
+<html>
+	<head>
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="css/styles.css" rel="stylesheet" />
+	</head>
+	<body>
+		<center> <!-- I love css -->
+			<canvas id="editor" width="600" height="400"></canvas>
+
+			<div class="form-inline">
+				<button class="btn btn-primary" id="stepBack"><i class="fa fa-fast-backward"></i></button>
+				<button class="btn btn-primary" id="playVideo"><i class="fa fa-play"></i> <span>0:00</span></button>
+				<button class="btn btn-primary" id="stepForward"><i class="fa fa-fast-forward"></i></button>
+
+				<select class="form-control" id="componentSelect">
+					<option>WebM</option>
+				</select>
+
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addFileModal">
+					Import Files
+				</button>
+
+				<button id="doDaMagic" type="button" class="btn btn-danger" data-toggle="modal" data-target="#downloadModal">
+					Create WebM
+				</button>
+			</div>
+			<br />
+			<div id="editForm">
+			</div>
+			<div class="form-inline">
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addComponentModal">
+					Add Component
+				</button>
+				<button id="removeComponent" class="btn btn-danger">Remove Component</button>
+			</div>
+		</center>
+
+		<div class="modal fade" tabindex="-1" role="dialog" id="downloadModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Create WebM</h4>
+					</div>
+				<div id="downloadBody" class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="abortDownload" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" id="downloadWebM" class="btn btn-primary" data-dismiss="modal">Download</button>
+				</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<div class="modal fade" tabindex="-1" role="dialog" id="addFileModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Add Files</h4>
+					</div>
+				<div class="modal-body">
+					<input type="file" id="fileInput" name="files[]" multiple />
+					<div id="fileInputPreview"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" id="fileImport" class="btn btn-primary" data-dismiss="modal">Import</button>
+				</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<div class="modal fade" tabindex="-1" role="dialog" id="addComponentModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Add Component</h4>
+					</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<label for="addComponentType" class="col-sm-2 form-control-label">Name</label>
+						<div class="col-sm-10">
+							<input id="addComponentName" type="text" class="form-control" placeholder="New Component" />
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="addComponentType" class="col-sm-2 form-control-label">Type</label>
+						<div class="col-sm-10">
+							<select id="addComponentType" class="form-control">
+								<option>Text</option>
+								<option>Image</option>
+								<option>Video</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" id="addComponent" class="btn btn-primary" data-dismiss="modal">Add</button>
+				</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+		<script type="text/javascript" src="js/components.js"></script>
+		<script type="text/javascript" src="js/fileInput.js"></script>
+		<script type="text/javascript" src="js/whammy.js"></script>
+		<script type="text/javascript" src="js/editor.js"></script>
+	</body>
+</html>
