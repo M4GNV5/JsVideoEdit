@@ -54,17 +54,25 @@ var loadedVideos = {};
 				var video = document.createElement("video");
 				video.src = URL.createObjectURL(file);
 				loadedVideos[name] = video;
+
+				if(!mainComponent.components[name])
+					mainComponent.components[name] = new VideoComponent(name);
 			}
 			else if(imageMIMEs.indexOf(file.type) != -1)
 			{
 				var img = new Image();
 				img.src = URL.createObjectURL(file);
 				loadedImages[name] = img;
+
+				if(!mainComponent.components[name])
+					mainComponent.components[name] = new ImageComponent(name);
 			}
 			else
 			{
 				console.warn("Unsupported file " + file.name);
 			}
 		}
+
+		refreshComponentSelect();
 	});
 //})();
