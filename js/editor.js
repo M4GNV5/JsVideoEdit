@@ -154,6 +154,50 @@ function editComponent(component)
 	});
 }
 
+var jcanvas = $("#editor");
+jcanvas.mousedown(function(ev)
+{
+	if(!mainComponent.showAnchors)
+		return;
+
+	var draggingObj;
+	var updateEdit = false;
+
+	for(var key in mainComponent.components)
+	{
+		var comp = mainComponent.components[key];
+		var diffX = Math.abs(ev.offsetX - comp.x);
+		var diffY = Math.abs(ev.offsetY - comp.y);
+		console.log(key, diffX, diffY);
+		if(diffX < 8 && diffY < 8)
+		{
+			draggingObj = comp;
+			if(key == editingKey)
+				updateEdit = true;
+			break;
+		}
+	}
+
+	if(draggingObj)
+	{
+		jcanvas.mousemove(function(ev)
+		{
+			draggingObj.x = ev.offsetX;
+			draggingObj.y = ev.offsetY;
+
+			mainComponent.render(ctx, time, function() {});
+			if(updateEdit)
+				editComponent(draggingObj);
+		});
+
+		jcanvas.mouseup(function(ev)
+		{
+			jcanvas.off("mousemove");
+			draggingObj = false;
+		});
+	}
+});
+
 var playBtn = $("#playVideo");
 var playIcon = $(playBtn.children()[0]);
 var playPos = $(playBtn.children()[1]);

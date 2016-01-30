@@ -6,7 +6,10 @@ function MainComponent()
 	this.duration = 5000;
 	this.fps = 30;
 
-	this.background = "white";
+	this.background = "#161618";
+	this.anchor = "#ee4d2e";
+
+	this.showAnchors = true;
 
 	this.components = {};
 }
@@ -27,9 +30,23 @@ MainComponent.prototype.render = function(ctx, time, cb)
 	function next(i)
 	{
 		if(i < keys.length)
-			self.components[keys[i]].render(ctx, time, next.bind(undefined, i + 1));
+		{
+			var comp = self.components[keys[i]];
+			comp.render(ctx, time, next.bind(undefined, i + 1));
+
+			if(self.showAnchors)
+			{
+				ctx.beginPath();
+				ctx.fillStyle = self.anchor;
+				ctx.arc(comp.x, comp.y, 7, 0, 2 * Math.PI);
+				ctx.fill();
+				ctx.closePath();
+			}
+		}
 		else
+		{
 			cb();
+		}
 	}
 }
 
@@ -64,7 +81,7 @@ function TextComponent(text)
 	this.duration = 3000;
 
 	this.text = text || "";
-	this.color = "black";
+	this.color = "white";
 	this.font = "bold 20px 'Helvetica Neue', Helvetica, sans-serif";
 }
 TextComponent.prototype.render = function(ctx, time, cb)
