@@ -53,12 +53,12 @@ MainComponent.prototype.render = function(ctx, time, cb)
 function ImageComponent(img)
 {
 	this.image = img || "";
-	this.x = 0;
-	this.y = 0;
+	this.x = 5;
+	this.y = 5;
 	this.startTime = 0;
 	this.duration = 3000;
 
-	img = img || {};
+	img = loadedImages[img] || {};
 	this.width = img.width || 0;
 	this.height = img.height || 0;
 }
@@ -66,6 +66,7 @@ ImageComponent.prototype.render = function(ctx, time, cb)
 {
 	if(time >= this.startTime && time < this.startTime + this.duration && loadedImages[this.image])
 	{
+		console.log("drawing " + this.image);
 		var img = loadedImages[this.image];
 		ctx.drawImage(img, this.x, this.y, this.width || img.width, this.height || img.height);
 	}
