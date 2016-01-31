@@ -161,7 +161,6 @@ jcanvas.mousedown(function(ev)
 		return;
 
 	var draggingObj;
-	var updateEdit = false;
 
 	for(var key in mainComponent.components)
 	{
@@ -172,8 +171,10 @@ jcanvas.mousedown(function(ev)
 		if(diffX < 8 && diffY < 8)
 		{
 			draggingObj = comp;
-			if(key == editingKey)
-				updateEdit = true;
+			
+			editingKey = key;
+			componentSelect.val(key);
+			editComponent(comp);
 			break;
 		}
 	}
@@ -186,8 +187,7 @@ jcanvas.mousedown(function(ev)
 			draggingObj.y = ev.offsetY;
 
 			mainComponent.render(ctx, time, function() {});
-			if(updateEdit)
-				editComponent(draggingObj);
+			editComponent(draggingObj);
 		});
 
 		jcanvas.mouseup(function(ev)
