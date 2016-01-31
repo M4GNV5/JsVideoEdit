@@ -58,8 +58,19 @@ var loadedVideos = {};
 			else if(imageMIMEs.indexOf(file.type) != -1)
 			{
 				var img = new Image();
-				img.src = URL.createObjectURL(file);
 				loadedImages[name] = img;
+
+				if(!mainComponent.components[name])
+				{
+					img.onload = function()
+					{
+						mainComponent.components[name] = new ImageComponent(name);
+						refreshComponentSelect();
+						mainComponent.render(ctx, time, function() {});
+					}
+				}
+
+				img.src = URL.createObjectURL(file);
 			}
 			else
 			{

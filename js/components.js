@@ -6,7 +6,10 @@ function MainComponent()
 	this.duration = 5000;
 	this.fps = 30;
 
-	this.background = "white";
+	this.background = "#161618";
+	this.anchor = "#ee4d2e";
+
+	this.showAnchors = true;
 
 	this.components = {};
 }
@@ -27,21 +30,35 @@ MainComponent.prototype.render = function(ctx, time, cb)
 	function next(i)
 	{
 		if(i < keys.length)
-			self.components[keys[i]].render(ctx, time, next.bind(undefined, i + 1));
+		{
+			var comp = self.components[keys[i]];
+			comp.render(ctx, time, next.bind(undefined, i + 1));
+
+			if(self.showAnchors)
+			{
+				ctx.beginPath();
+				ctx.fillStyle = self.anchor;
+				ctx.arc(comp.x, comp.y, 7, 0, 2 * Math.PI);
+				ctx.fill();
+				ctx.closePath();
+			}
+		}
 		else
+		{
 			cb();
+		}
 	}
 }
 
 function ImageComponent(img)
 {
 	this.image = img || "";
-	this.x = 0;
-	this.y = 0;
+	this.x = 5;
+	this.y = 5;
 	this.startTime = 0;
 	this.duration = 3000;
 
-	img = img || {};
+	img = loadedImages[img] || {};
 	this.width = img.width || 0;
 	this.height = img.height || 0;
 }
@@ -49,6 +66,7 @@ ImageComponent.prototype.render = function(ctx, time, cb)
 {
 	if(time >= this.startTime && time < this.startTime + this.duration && loadedImages[this.image])
 	{
+		console.log("drawing " + this.image);
 		var img = loadedImages[this.image];
 		ctx.drawImage(img, this.x, this.y, this.width || img.width, this.height || img.height);
 	}
@@ -64,7 +82,7 @@ function TextComponent(text)
 	this.duration = 3000;
 
 	this.text = text || "";
-	this.color = "black";
+	this.color = "white";
 	this.font = "bold 20px 'Helvetica Neue', Helvetica, sans-serif";
 }
 TextComponent.prototype.render = function(ctx, time, cb)
